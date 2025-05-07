@@ -1,0 +1,98 @@
+# 参考可莉最小配置 https://raw.githubusercontent.com/luestr/ProxyResource/main/Tool/Loon/Config/zh-CN/Loon_Simple_Sample_Configuration_By_iKeLee.conf
+# 最小配置按时延选择代理
+
+[General]
+sni-sniffing = false
+ip-mode = prefer-v4
+
+dns-server = system,119.29.29.29,8.8.8.8,2402:4e00::,2001:4860:4860::8888
+
+# 禁用stun是否禁用stun协议的udp数据，禁用后可以有效解决webrtc的ip泄露
+disable-stun = true
+
+# 是否开启局域网代理访问
+allow-wifi-access = true
+
+# 开启局域网访问后的http代理端口
+wifi-access-http-port = 7222
+
+# 开启局域网访问后的socks5代理端口
+wifi-access-socks5-port = 7221
+
+# 指定流量使用哪个网络接口进行转发
+interface-mode = auto
+
+# 节点测速时的超时秒数
+test-timeout = 2
+
+# 一个节点连接失败几次后会进行节点切换，默认3次
+switch-node-after-failure-times = 3
+
+# 检测网络可用性时的链接，一般填写可以直连访问的链接
+internet-test-url = http://connectivitycheck.platform.hicloud.com/generate_204
+
+# 测速所用的测试链接，如果策略组没有自定义测试链接就会使用这里配置的
+proxy-test-url = http://www.gstatic.com/generate_204
+
+# 订阅资源解析器链接，推荐Peng大的sub-store订阅节点解析器
+resource-parser = https://raw.githubusercontent.com/sub-store-org/Sub-Store/release/sub-store-parser.loon.min.js
+
+# 目前iOS设备上的流量有两种方式传递给Loon，分别是HTTP Proxy和TUN（可以简单理解为虚拟网卡），bypass-tun则和TUN有关，如果配置了该参数，那么所配置的这些IP段、域名就会不交给Loon来处理，系统直接处理
+bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+
+# 和上面类似，skip-proxy则和HTTP Proxy有关，如果配置了该参数，那么所配置的这些IP段、域名将不会转发到Loon，而是由系统处理
+skip-proxy = 10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
+
+[Proxy]
+
+[Remote Proxy]
+
+[Remote Filter]
+香港节点 = NameRegex, FilterKey = "^(?=.*香港)(?!.*仅海外).*"
+新加坡节点 = NameRegex, FilterKey = "^(?=.*新加坡)(?!.*仅海外).*"
+美国节点 = NameRegex, FilterKey = "^(?=.*美国)(?!.*仅海外).*"
+德国节点 = NameRegex, FilterKey = "^(?=.*德国)(?!.*仅海外).*"
+
+[Proxy Group]
+# 时延优选策略组
+香港时延优选 = url-test,香港节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/HK.png
+新加坡时延优选 = url-test,新加坡节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
+美国时延优选 = url-test,美国节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
+德国时延优选 = url-test,德国节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/DE.png
+# --------------------------------
+# 根据延迟大小自动选择
+全局时延优选 = fallback,新加坡时延优选,interval = 60,max-timeout = 2000,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/fallback.png
+
+[Rule]
+DOMAIN-KEYWORD,bochk,DIRECT
+# 订阅的规则在Remote Rule，这里不需要配置
+FINAL,全局时延优选
+
+[Remote Rule]
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/reject.txt, policy=REJECT, tag=reject, enabled=true
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/private.txt, policy=DIRECT, tag=private, enabled=true
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/cncidr.txt, policy=DIRECT, tag=cn-ip, enabled=true
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/direct.txt, policy=DIRECT, tag=cn-domain, enabled=true
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/apple.txt, policy=DIRECT, tag=apple, enabled=true
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/icloud.txt, policy=DIRECT, tag=icloud, enabled=true
+https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/proxy.txt, policy=全局时延优选, tag=proxy, enabled=true
+
+[Host]
+
+[Rewrite]
+
+[Script]
+
+[Plugin]
+https://kelee.one/Tool/Loon/Plugin/Weixin_Official_Accounts_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/CaixinMedia_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/BaiduNetDisk_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/NeteaseCloudMusic_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/Bilibili_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/YouTube_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/MaiMai_remove_ads.plugin, enabled=true
+https://kelee.one/Tool/Loon/Plugin/Taobao_remove_ads.plugin, enabled=true
+
+[Mitm]
+hostname =
+skip-server-cert-verify = false
