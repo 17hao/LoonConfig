@@ -52,6 +52,7 @@ skip-proxy = 10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
 新加坡节点 = NameRegex, FilterKey = "^(?=.*新加坡)(?!.*仅海外).*"
 美国节点 = NameRegex, FilterKey = "^(?=.*美国)(?!.*仅海外).*"
 德国节点 = NameRegex, FilterKey = "^(?=.*德国)(?!.*仅海外).*"
+英国节点 = NameRegex, FilterKey = "^(?=.*英国)(?!.*仅海外).*"
 
 [Proxy Group]
 # 时延优选策略组
@@ -59,6 +60,7 @@ skip-proxy = 10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
 新加坡时延优选 = url-test,新加坡节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/SG.png
 美国时延优选 = url-test,美国节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/US.png
 德国时延优选 = url-test,德国节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/DE.png
+英国时延优选 = url-test,英国节点,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/Orz-3/mini/master/Color/UK.png
 # --------------------------------
 # 根据延迟大小自动选择
 全局时延优选 = fallback,新加坡时延优选,interval = 60,max-timeout = 2000,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/fallback.png
