@@ -66,6 +66,7 @@ skip-proxy = 10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
 全局时延优选 = fallback,新加坡时延优选,interval = 60,max-timeout = 2000,img-url = https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/fallback.png
 
 [Rule]
+DOMAIN,idmsa.apple.com,DIRECT
 DOMAIN-KEYWORD,vfsglobal,DIRECT
 DOMAIN-KEYWORD,bochk,DIRECT
 # 订阅的规则在Remote Rule，这里不需要配置
